@@ -23,8 +23,6 @@ find_str:
     add $a1, $a1, $a0				# $a1 = end of email array
     add $a3, $a3, $a2				# $a3 = end of word array
 
-
-
 haystick_loop:
     bge $a0, $a1, haystick_loop_end	# if len(email) == end of email array goto haystick_loop_end 
 								# else
@@ -33,7 +31,6 @@ haystick_loop:
 needle_loop:
     # load char from haystick
     lbu $t0, 0($t6)					# $t0 = byte code of first letter of email
-    
     # load char from needle			
     lbu $t1, 0($t7)					# $t1 = byte code of first letter of word
 
@@ -124,7 +121,6 @@ parse_email:
     sw $s0, 4($sp)
     sw $s1, 8($sp)
     sw $s2, 12($sp)
-    
 
     ### E-Mail in Puffer einlesen (0.5 Punkte)	
 	la $a0, email_buffer			# $a0 = 4096 byte / character
@@ -145,59 +141,11 @@ parse_email:
     la $a0, email_buffer            # copy email from main memory (RAM address) into $a0 (haystack)
     move $a1, $s0                   # $a1 = number of characters (len of haystack)
     la $a2, header_end              # copy address of header_end (.byte 13, 10, 13, 10) into $a2 (needle)
-    
     lw $a3, header_end_length       # copy header_end_length (4) into $a3 (len of needle)
     
-	
-    jal find_str
-    
-    la $a2, header_subject
-    #li $v0, 4
-    #syscall 
+	jal find_str
 
-    move $t0, $a2                   # $t7 = $a2 word array
-    
-    # load char from needle         
-    lbu $a0, 0($t0)                 # $t1 = byte code of first letter of word
-    li $v0, 11
-    syscall
-    
-    addi $sp, $sp, -4
-    sw $s3, 0($sp)
-
-    move $s3, $a0
-
-    lw $s3, 0($sp)
-    addi $sp, $sp, 4
-    #addi $t0, $t0, 1
-
-    #lbu $a0, 0($t0)
-    #li $v0, 11
-    #syscall
-    
-    #addi $sp, $sp, -4
-    #sw $s3, 0($sp)
-    #move $s3, $a0
-
-    #li $a0, 10
-    #li $v0, 11
-    #syscall 
-
-    #move $t3, $s3
-    #lbu $a0, 0($t3)
-    #li $v0, 11
-    #syscall
-
-    #addi $t3, $t3, 1
-    #lbu  $a0, 0($t3)
-    #li $v0, 11
-    #syscall
-
-
-
-
-    
-    move $s2, $v0					# $s1 = position of ".byte 13, 10, 13, 10"
+    move $s2, $v0					# $s2 = position of ".byte 13, 10, 13, 10"
 
     ### Rueckgabewerte bereitstellen (0.5 Punkte)
 	move $v0, $s1
@@ -223,7 +171,7 @@ parse_email:
 
 .data
 
-input_file: .asciiz "/home/ammer/Desktop/WiSe1718/RechnerOrg/Rorg_HA/Hausaufgabe-20171221/email1"
+input_file: .asciiz "/home/johanna/Schreibtisch/Rechner Organisation/Hausaufgabe-20171220/email1"
 email_buffer: .space 4096
 size: .word 0
 
