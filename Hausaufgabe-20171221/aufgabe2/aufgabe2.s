@@ -108,12 +108,12 @@ spamfilter:
     move $s5, $v0                   # save the address of the allocated mem
    
     ### Schleife ueber Bad words (wort1,gewicht1,wort2,gewicht2,...)
-	add $s2, $zero, $zero		# $s4 = i = 0
-	add $s4, $zero, $zero		# $s6 = j = 0
+	add $s2, $zero, $zero		# $s2 = i = 0
+	add $s4, $zero, $zero		# $s4 = j = 0
 
 	### reset registers which were used in search_for_badwords for other stuff		
 	reset_s_register:
-		add $s4, $zero, $zero		# $s6 = j = 0
+		add $s4, $zero, $zero			# $s4 = j = 0
 		la $s0, badwords_buffer			# $s0 = badwords_buffer
 		lw $s1, badwords_size			# $s1 = len of badwords_buffer
 
